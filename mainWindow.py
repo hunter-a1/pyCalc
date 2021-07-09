@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import QGridLayout
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtWidgets import QLineEdit
 
+from PyQt5.QtCore import Qt
+
 class MainWindow(QDialog):
     def __init__(self):
         super().__init__()
@@ -46,7 +48,7 @@ class MainWindow(QDialog):
         self.plusBtn.clicked.connect(self.slotNumClicked)
         self.minusBtn = QPushButton('-')
         self.minusBtn.clicked.connect(self.slotNumClicked)
-        self.multBtn = QPushButton('x')
+        self.multBtn = QPushButton('*')
         self.multBtn.clicked.connect(self.slotNumClicked)
         self.divBtn = QPushButton('/')
         self.divBtn.clicked.connect(self.slotNumClicked)
@@ -94,6 +96,11 @@ class MainWindow(QDialog):
             self.outLE.setText(leTxt)
         #end if
     #end slotNumClicked
+    def numKeyPressed(self,number):
+        leTxt = self.outLE.text()
+        leTxt += str(number)
+        self.outLE.setText(leTxt)
+    #end numKeyPressed
     def slotDelClicked(self):
         leTxt = self.outLE.text()
         leTxt = leTxt[:-1]
@@ -129,7 +136,7 @@ class MainWindow(QDialog):
             out = self.add(x,y)
         elif func == '-':
             out = self.subtract(x,y)
-        elif func == 'x':
+        elif func == '*':
             out = self.multiply(x,y)
         elif func == '/':
             out = self.divide(x,y)
@@ -197,6 +204,39 @@ class MainWindow(QDialog):
     def divide(self,x,y):
         return x / y
     #end divide
-
-
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_0:
+            self.numKeyPressed(0)
+        elif event.key() == Qt.Key_1:
+            self.numKeyPressed(1)
+        elif event.key() == Qt.Key_2:
+            self.numKeyPressed(2)
+        elif event.key() == Qt.Key_3:
+            self.numKeyPressed(3)
+        elif event.key() == Qt.Key_4:
+            self.numKeyPressed(4)
+        elif event.key() == Qt.Key_5:
+            self.numKeyPressed(5)
+        elif event.key() == Qt.Key_6:
+            self.numKeyPressed(6)
+        elif event.key() == Qt.Key_7:
+            self.numKeyPressed(7)
+        elif event.key() == Qt.Key_8:
+            self.numKeyPressed(8)
+        elif event.key() == Qt.Key_9:
+            self.numKeyPressed(9)
+        elif event.key() == Qt.Key_Period:
+            self.numKeyPressed('.')
+        elif event.key() == Qt.Key_Plus:
+            self.numKeyPressed('+')
+        elif event.key() == Qt.Key_Minus:
+            self.numKeyPressed('-')
+        elif event.key() == Qt.Key_multiply:
+            self.numKeyPressed('*')
+        elif event.key() == Qt.Key_division:
+            self.numKeyPressed('/')
+        elif event.key() == Qt.Key_Enter:
+            self.slotEqualsClicked()
+        #end if
+    #end keyPressEvent
 
